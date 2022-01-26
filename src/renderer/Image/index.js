@@ -361,15 +361,15 @@ const getImageComponent = config => class Image extends Component {
                   style={{
                     height,
                     width,
+                    objectFit:'cover'
                   }}
                 />
               </div>
 
               <div className="rdw-image-options-wrapper">
                 {!isReadOnly() && hovered && isImageAlignmentEnabled()
-                   ? 
-                  this.renderAlignmentOptions(alignment)
-                    : undefined} 
+                  ? this.renderAlignmentOptions(alignment)
+                  : undefined}
                 {!isReadOnly() && hovered && isImageSizeEnabled() ? this.renderSizeOptions(alignment) : undefined}
               </div>
             </span>
