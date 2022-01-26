@@ -25,6 +25,11 @@ export default {
   "components.controls.embedded.embeddedlink": "Embedded Link",
   "components.controls.embedded.enterlink": "Enter link",
 
+  // Youtube
+  "components.controls.youtube.youtube": "Youtube",
+  "components.controls.youtube.youtubevideo": "Youtube Video",
+  "components.controls.youtube.enterlink": "Enter link",
+
   // Emoji
   "components.controls.emoji.emoji": "Emoji",
 
