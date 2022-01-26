@@ -36,4 +36,6 @@
 }
 .rdw-justify-aligned-block > div {
   display: inline-block;
+  text-align: justify !important;
+
 }
