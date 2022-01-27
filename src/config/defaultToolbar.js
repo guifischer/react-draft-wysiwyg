@@ -18,6 +18,7 @@ import link from '../../images/link.svg';
 import unlink from '../../images/unlink.svg';
 import emoji from '../../images/emoji.svg';
 import embedded from '../../images/embedded.svg';
+import youtube from '../../images/youtube.svg';
 import image from '../../images/image.svg';
 import undo from '../../images/undo.svg';
 import redo from '../../images/redo.svg';
@@ -44,6 +45,7 @@ export default {
     "embedded",
     "emoji",
     "image",
+    "youtube",
     "remove",
     "history"
   ],
@@ -343,6 +345,14 @@ export default {
       height: "auto",
       width: "auto"
     },
+    title: undefined
+  },
+  youtube: {
+    icon: youtube,
+    className: undefined,
+    component: undefined,
+    popupClassName: undefined,
+    embedCallback: undefined,
     title: undefined
   },
   image: {

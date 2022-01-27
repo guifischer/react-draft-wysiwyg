@@ -410,6 +410,7 @@ class WysiwygEditor extends Component {
             {toolbar.options.map((opt, index) => {
               const Control = Controls[opt];
               const config = toolbar[opt];
+
               if (opt === "image" && uploadCallback) {
                 config.uploadCallback = uploadCallback;
               }
