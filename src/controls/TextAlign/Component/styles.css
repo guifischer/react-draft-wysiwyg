@@ -27,13 +27,20 @@
 }
 .rdw-right-aligned-block > div {
   display: inline-block;
+  text-align: right;
+
 }
 .rdw-left-aligned-block > div {
   display: inline-block;
+  text-align: left !important;
+
 }
 .rdw-center-aligned-block > div {
   display: inline-block;
+  text-align: center !important;
 }
 .rdw-justify-aligned-block > div {
   display: inline-block;
+  text-align: justify !important;
+
 }

@@ -11,6 +11,7 @@ import emoji from "./Emoji";
 import image from "./Image";
 import remove from "./Remove";
 import history from "./History";
+import youtube from "./youtube";
 
 export default {
   inline,
@@ -23,6 +24,7 @@ export default {
   link,
   embedded,
   emoji,
+  youtube,
   image,
   remove,
   history
