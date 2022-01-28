@@ -44,8 +44,8 @@ export default {
     "link",
     "embedded",
     "emoji",
-    "image",
     "youtube",
+    "image",
     "remove",
     "history"
   ],
