@@ -42,7 +42,7 @@ export default {
     "textAlign",
     "colorPicker",
     "link",
-    "embedded",
+    // "embedded",
     "emoji",
     "youtube",
     "image",
