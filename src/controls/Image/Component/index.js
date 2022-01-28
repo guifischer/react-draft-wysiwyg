@@ -282,7 +282,7 @@ class LayoutComponent extends Component {
             </span>
           </div>
         )}
-        <div className="rdw-image-modal-size">
+        {/* <div className="rdw-image-modal-size">
           &#8597;&nbsp;
           <input
             onChange={this.updateValue}
@@ -303,7 +303,7 @@ class LayoutComponent extends Component {
             placeholder="Width"
           />
           <span className="rdw-image-mandatory-sign">*</span>
-        </div>
+        </div> */}
         <span className="rdw-image-modal-btn-section">
           <button
             className="rdw-image-modal-btn"
