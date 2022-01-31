@@ -266,7 +266,7 @@ class LayoutComponent extends Component {
             <span className="rdw-image-mandatory-sign">*</span>
           </div>
         )}
-        {altConf.present && (
+        {/* {altConf.present && (
           <div className="rdw-image-modal-size">
             <span className="rdw-image-modal-alt-lbl">Alt Text</span>
             <input
@@ -281,8 +281,8 @@ class LayoutComponent extends Component {
               {altConf.mandatory && '*'}
             </span>
           </div>
-        )}
-        <div className="rdw-image-modal-size">
+        )} */}
+        {/* <div className="rdw-image-modal-size">
           &#8597;&nbsp;
           <input
             onChange={this.updateValue}
@@ -303,7 +303,7 @@ class LayoutComponent extends Component {
             placeholder="Width"
           />
           <span className="rdw-image-mandatory-sign">*</span>
-        </div>
+        </div> */}
         <span className="rdw-image-modal-btn-section">
           <button
             className="rdw-image-modal-btn"
