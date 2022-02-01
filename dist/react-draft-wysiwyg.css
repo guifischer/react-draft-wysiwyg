@@ -1006,6 +1006,7 @@
   height: 100%;
   overflow: auto;
   box-sizing: border-box;
+  padding: 10px;
 }
 .rdw-editor-toolbar {
   padding: 6px 5px 0;
@@ -1036,6 +1037,10 @@
   background: #f1f1f1;
   border-radius: 3px;
   padding: 1px 10px;
+}
+
+figure{
+  margin: unset;
 }
 /**
  * Draft v0.9.1
