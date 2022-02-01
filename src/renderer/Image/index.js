@@ -361,7 +361,8 @@ const getImageComponent = config => class Image extends Component {
                   style={{
                     height,
                     width,
-                    objectFit:'cover'
+                    objectFit:'cover',
+                    maxWidth:'100%'
                   }}
                 />
               </div>
