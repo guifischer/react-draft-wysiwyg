@@ -328,11 +328,7 @@ const getImageComponent = config => class Image extends Component {
           <span
             onMouseEnter={this.toggleHovered}
             onMouseLeave={this.toggleHovered}
-            className={classNames("rdw-image-alignment", {
-              "rdw-image-left": alignment === "left",
-              "rdw-image-right": alignment === "right",
-              "rdw-image-center": !alignment || alignment === "none",
-            })}
+            className={classNames("rdw-image-alignment", "rdw-image-center")}
           >
             <span className="rdw-image-imagewrapper">
               <div
