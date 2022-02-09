@@ -289,7 +289,7 @@ const getImageComponent = (config) =>
             className={classNames("rdw-image-alignment", {
               "rdw-image-left": alignment === "left",
               "rdw-image-right": alignment === "right",
-              "rdw-image-center": !alignment || alignment === "none",
+              "rdw-image-center": !alignment || alignment === "none" || alignment === "center",
             })}
           >
             <span className="rdw-image-imagewrapper">
