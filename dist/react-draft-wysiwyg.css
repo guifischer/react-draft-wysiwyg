@@ -1021,7 +1021,7 @@
   user-select: none;
 }
 .public-DraftStyleDefault-block {
-  margin: 1em 0;
+  min-height: 24px;
 }
 .rdw-editor-wrapper:focus {
   outline: none;
