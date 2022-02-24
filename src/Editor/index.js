@@ -358,6 +358,32 @@ class WysiwygEditor extends Component {
     }
   };
 
+  positioningImg=(blocks,targetKey,imageKey)=>{
+
+    const imgBlockIndex = blocks.findIndex(b=>b.key == imageKey)
+    const targetBlockIndex = blocks.findIndex(b=>b.key == targetKey)
+
+    const firstPart = blocks.slice(0, targetBlockIndex).filter(b=>b.key!=blocks[imgBlockIndex-1].key && b.key!=blocks[imgBlockIndex].key)
+    const secondPart = blocks.slice(targetBlockIndex).filter(b=>b.key!=blocks[imgBlockIndex-1].key && b.key!=blocks[imgBlockIndex].key)
+    const imgBlocks= [blocks[imgBlockIndex-1],blocks[imgBlockIndex]]
+
+    return [...firstPart,...imgBlocks,...secondPart]
+
+  }
+
+  drop=(event)=>{
+
+    const imgKey = event.dataTransfer.getData("key")
+    const offsetKey = event.target.dataset.offsetKey
+    const key = offsetKey.substring(0,offsetKey.indexOf('-'));
+
+    const raw = convertToRaw(this.state.editorState.getCurrentContent())
+
+    const newContent = {...raw,blocks:this.positioningImg(raw.blocks,key,imgKey)}
+
+    this.onChange(EditorState.push(this.state.editorState, convertFromRaw(newContent), 'reorder'));
+  }
+
   render() {
     const { editorState, editorFocused, toolbar } = this.state;
     const {
@@ -430,6 +456,7 @@ class WysiwygEditor extends Component {
           onKeyDown={KeyDownHandler.onKeyDown}
           onKeyUp={(event)=>event.key === 'Enter' || event.keyCode === 13?document.getElementsByClassName("rdw-editor-main")[0].scrollBy(0, 35):false}
           onMouseDown={this.onEditorMouseDown}
+          onDrop={(event)=>this.drop(event)}
         > 
           <Editor
             ref={this.setEditorReference}
