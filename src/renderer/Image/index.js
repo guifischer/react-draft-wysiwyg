@@ -256,6 +256,11 @@ const getImageComponent = (config) =>
       );
     }
 
+
+  drag(event):any{
+    event.dataTransfer.setData("key", this.props.block.key);
+  }
+  
     renderDeletionOption(alignment): Object {
       return (
         <div
@@ -273,6 +278,7 @@ const getImageComponent = (config) =>
         </div>
       );
     }
+
 
     render(): Object {
       const { block, contentState } = this.props;
@@ -322,6 +328,8 @@ const getImageComponent = (config) =>
                     objectFit: "cover",
                     maxWidth: "100%",
                   }}
+                  draggable="true"
+                  onDragStart={(event)=>this.drag(event)}                  
                 />
               </div>
 
