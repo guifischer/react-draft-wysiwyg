@@ -156,8 +156,8 @@ const getImageComponent = config => class Image extends Component {
     });
   };
 
-  toggleHovered: Function = (): void => {
-    const hovered = !this.state.hovered;
+  toggleHovered: Function = (isHovered): void => {
+    const hovered = isHovered;
     this.setState({
       hovered,
     });
@@ -329,8 +329,8 @@ const getImageComponent = config => class Image extends Component {
       return (
         <>
           <span
-            onMouseEnter={this.toggleHovered}
-            onMouseLeave={this.toggleHovered}
+            onMouseOver={()=>this.toggleHovered(true)}
+            onMouseLeave={()=>this.toggleHovered(false)}
             className={classNames("rdw-image-alignment", "rdw-image-center")}
           >
             <span className="rdw-image-imagewrapper">
