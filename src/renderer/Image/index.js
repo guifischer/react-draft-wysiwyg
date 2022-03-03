@@ -144,12 +144,12 @@ const getImageComponent = (config) =>
       });
     };
 
-    toggleHovered: Function = (): void => {
-      const hovered = !this.state.hovered;
-      this.setState({
-        hovered,
-      });
-    };
+  toggleHovered: Function = (isHovered): void => {
+    const hovered = isHovered;
+    this.setState({
+      hovered,
+    });
+  };
 
     renderAlignmentOptions(alignment): Object {
       const icons = defaultToolbar.imageAlign;
@@ -290,13 +290,9 @@ const getImageComponent = (config) =>
       return (
         <>
           <span
-            onMouseEnter={this.toggleHovered}
-            onMouseLeave={this.toggleHovered}
-            className={classNames("rdw-image-alignment", {
-              "rdw-image-left": alignment === "left",
-              "rdw-image-right": alignment === "right",
-              "rdw-image-center": !alignment || alignment === "none" || alignment === "center",
-            })}
+            onMouseOver={()=>this.toggleHovered(true)}
+            onMouseLeave={()=>this.toggleHovered(false)}
+            className={classNames("rdw-image-alignment", "rdw-image-center")}
           >
             <span className="rdw-image-imagewrapper">
               <div
