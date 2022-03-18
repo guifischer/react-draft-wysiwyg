@@ -363,9 +363,9 @@ class WysiwygEditor extends Component {
     const imgBlockIndex = blocks.findIndex(b=>b.key == imageKey)
     const targetBlockIndex = blocks.findIndex(b=>b.key == targetKey)
 
-    const firstPart = blocks.slice(0, targetBlockIndex).filter(b=>b.key!=blocks[imgBlockIndex-1].key && b.key!=blocks[imgBlockIndex].key)
-    const secondPart = blocks.slice(targetBlockIndex).filter(b=>b.key!=blocks[imgBlockIndex-1].key && b.key!=blocks[imgBlockIndex].key)
-    const imgBlocks= [blocks[imgBlockIndex-1],blocks[imgBlockIndex]]
+    const firstPart = blocks.slice(0, targetBlockIndex).filter(b=> b.key!=blocks[imgBlockIndex].key)
+    const secondPart = blocks.slice(targetBlockIndex).filter(b=> b.key!=blocks[imgBlockIndex].key)
+    const imgBlocks= [blocks[imgBlockIndex]]
 
     return [...firstPart,...imgBlocks,...secondPart]
 
