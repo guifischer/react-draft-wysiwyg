@@ -329,7 +329,7 @@ const getImageComponent = (config) =>
                 />
               </div>
 
-              <div className="rdw-image-options-wrapper">
+              <div className="rdw-image-options-wrapper alignement-options">
                 {!isReadOnly() && hovered && isImageAlignmentEnabled()
                   ? this.renderAlignmentOptions(alignment)
                   : undefined}

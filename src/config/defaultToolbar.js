@@ -337,7 +337,7 @@ export default {
     urlEnabled: true,
     uploadEnabled: true,
     previewImage: false,
-    alignmentEnabled: false,
+    alignmentEnabled: true,
     sizeEnabled: false,
     deletionEnabled: true,
     uploadCallback: undefined,
