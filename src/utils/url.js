@@ -45,3 +45,34 @@ const MMF_PREFIX = 'https://www.myminifactory.com/object/card/';
      }
      return undefined;
  }
+
+ ///////////////YOUTUBE
+
+ const YTBMATCH_URL = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+ const YTB_PREFIX = 'https://www.youtube.com/embed/';
+
+ /**
+ * @param url
+ * @returns {isYTBvideo: boolean}
+ */
+  export function isYTBvideo (url) {
+  return url.includes('youtu')
+}
+
+/**
+ * @param url
+ * @returns {id: string | null}
+ */
+ export function getId(url) {
+  const match = url.match(YTBMATCH_URL);
+
+  return match && match[2].length === 11 ? match[2] : null;
+};
+
+/**
+ * @param url
+ * @returns {convertedUrl: string}
+ */
+ export function convertYTBUrl (url){
+  return YTB_PREFIX + getId(url);
+};

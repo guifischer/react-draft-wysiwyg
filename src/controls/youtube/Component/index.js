@@ -6,6 +6,8 @@ import { stopPropagation } from '../../../utils/common';
 import Option from '../../../components/Option';
 import './styles.css';
 
+import {getId,convertYTBUrl,isYTBvideo} from '../../../utils/url'
+
 class LayoutComponent extends Component {
   static propTypes = {
     expanded: PropTypes.bool,
@@ -29,20 +31,7 @@ class LayoutComponent extends Component {
     }
   }
 
-  isYTBvideo = (url: string) => {
-    return url.includes('youtu')
-  }
 
-  getId = (url: string) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-
-    return match && match[2].length === 11 ? match[2] : null;
-  };
-
-  convertYTBUrl = (url: string) => {
-    return "https://www.youtube.com/embed/" + this.getId(url);
-  };
 
   onChange = () => {
     const { onChange } = this.props;
@@ -52,7 +41,7 @@ class LayoutComponent extends Component {
 
   updateLink = event => {
     this.setState({
-      youtubeLink: this.convertYTBUrl(event.target.value),
+      youtubeLink: convertYTBUrl(event.target.value),
     });
   };
 
@@ -94,7 +83,7 @@ class LayoutComponent extends Component {
             type="button"
             className="rdw-youtube-modal-btn"
             onClick={this.onChange}
-            disabled={!youtubeLink || !this.isYTBvideo(youtubeLink) || this.getId(youtubeLink)==null}
+            disabled={!youtubeLink || !isYTBvideo(youtubeLink) || getId(youtubeLink)==null}
           >
             {translations['generic.add']}
           </button>
