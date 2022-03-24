@@ -1,0 +1,10 @@
+.MMFfluidMedia {
+
+  display: flex;
+  justify-content: center;
+}
+
+.MMFfluidMedia iframe {
+  width: 242px;
+  height: 371px;
+}

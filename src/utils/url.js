@@ -12,3 +12,36 @@ export function ensureSafeUrl(url) {
   const normalizedUrl = String(url).replace(ATTRIBUTE_WHITESPACES, '');
   return normalizedUrl.match(SAFE_URL) ? url : '#';
 }
+
+/***************************************************************************************/
+
+const MMFMATCH_URL = /(?:https?:\/\/)?(?:www\.)?(?:myminifactory\.com)?(?:\/object\/3d-print-)(.*)\/?/;
+const MMF_PREFIX = 'https://www.myminifactory.com/object/card/';
+
+
+/**
+ * @param link
+ * @returns {boolean}
+ */
+ export function isMMF(link) {
+  return MMFMATCH_URL.test(link)
+}
+
+/**
+ * @param link
+ * @returns {{id: string, profile: string, src: string, link: string}}
+ */
+ export function getMMFInfos(link)
+ {
+     if (isMMF(link)) {
+         //TODO ping to see if it exists (not 404)
+         const id = link.match(MMFMATCH_URL)[1];
+         return {
+             profile: 'mmf',
+             id: id,
+             src: `${MMF_PREFIX}${id}`,
+             link,
+         };
+     }
+     return undefined;
+ }
