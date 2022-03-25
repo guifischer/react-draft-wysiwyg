@@ -292,7 +292,11 @@ const getImageComponent = (config) =>
           <span
             onMouseOver={()=>this.toggleHovered(true)}
             onMouseLeave={()=>this.toggleHovered(false)}
-            className={classNames("rdw-image-alignment", "rdw-image-center")}
+            className={classNames("rdw-image-alignment", {
+              'rdw-image-left': alignment === 'left',
+              'rdw-image-right': alignment === 'right',
+              'rdw-image-center': !alignment || alignment === 'none'
+            })}
           >
             <span className="rdw-image-imagewrapper">
               <div
@@ -329,7 +333,7 @@ const getImageComponent = (config) =>
                 />
               </div>
 
-              <div className="rdw-image-options-wrapper">
+              <div className="rdw-image-options-wrapper alignement-options">
                 {!isReadOnly() && hovered && isImageAlignmentEnabled()
                   ? this.renderAlignmentOptions(alignment)
                   : undefined}
