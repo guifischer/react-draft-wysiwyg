@@ -12,3 +12,67 @@ export function ensureSafeUrl(url) {
   const normalizedUrl = String(url).replace(ATTRIBUTE_WHITESPACES, '');
   return normalizedUrl.match(SAFE_URL) ? url : '#';
 }
+
+/***************************************************************************************/
+
+const MMFMATCH_URL = /(?:https?:\/\/)?(?:www\.)?(?:myminifactory\.com)?(?:\/object\/3d-print-)(.*)\/?/;
+const MMF_PREFIX = 'https://www.myminifactory.com/object/card/';
+
+
+/**
+ * @param link
+ * @returns {boolean}
+ */
+ export function isMMF(link) {
+  return MMFMATCH_URL.test(link)
+}
+
+/**
+ * @param link
+ * @returns {{id: string, profile: string, src: string, link: string}}
+ */
+ export function getMMFInfos(link)
+ {
+     if (isMMF(link)) {
+         //TODO ping to see if it exists (not 404)
+         const id = link.match(MMFMATCH_URL)[1];
+         return {
+             profile: 'mmf',
+             id: id,
+             src: `${MMF_PREFIX}${id}`,
+             link,
+         };
+     }
+     return undefined;
+ }
+
+ ///////////////YOUTUBE
+
+ const YTBMATCH_URL = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+ const YTB_PREFIX = 'https://www.youtube.com/embed/';
+
+ /**
+ * @param url
+ * @returns {isYTBvideo: boolean}
+ */
+  export function isYTBvideo (url) {
+  return url.includes('youtu')
+}
+
+/**
+ * @param url
+ * @returns {id: string | null}
+ */
+ export function getId(url) {
+  const match = url.match(YTBMATCH_URL);
+
+  return match && match[2].length === 11 ? match[2] : null;
+};
+
+/**
+ * @param url
+ * @returns {convertedUrl: string}
+ */
+ export function convertYTBUrl (url){
+  return YTB_PREFIX + getId(url);
+};

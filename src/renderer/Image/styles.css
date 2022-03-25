@@ -17,6 +17,10 @@
   flex-direction: row;
   justify-content: space-between;
 }
+.alignement-options{
+  position: absolute;
+  bottom: 6px;
+}
 .rdw-alignment-option-left {
   justify-content: flex-start;
 }

@@ -1,4 +1,5 @@
 import Embedded from "./Embedded";
+import MMFEmbedded from "./MMFEmbedded";
 import getImageComponent from "../renderer/Image";
 
 const getBlockRenderFunc = (config, customBlockRenderer) => (block) => {
@@ -17,6 +18,12 @@ const getBlockRenderFunc = (config, customBlockRenderer) => (block) => {
     } else if (entity && entity.type === "EMBEDDED_LINK") {
       return {
         component: Embedded,
+        editable: false,
+      };
+    }
+    else if (entity && entity.type === "MMF_EMBEDDED_OBJECT") {
+      return {
+        component: MMFEmbedded,
         editable: false,
       };
     }
