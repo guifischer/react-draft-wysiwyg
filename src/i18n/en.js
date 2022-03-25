@@ -30,6 +30,11 @@ export default {
   "components.controls.youtube.youtubevideo": "Youtube Video",
   "components.controls.youtube.enterlink": "Enter link",
 
+  // mmf object
+  "components.controls.mmfObject.mmfObject": "MMF Object",
+  "components.controls.mmfObject.mmfObject": "MMF Object",
+  "components.controls.mmfObject.enterlink": "Enter link",
+
   // Emoji
   "components.controls.emoji.emoji": "Emoji",
 

@@ -12,6 +12,7 @@ import image from "./Image";
 import remove from "./Remove";
 import history from "./History";
 import youtube from "./youtube";
+import mmfObject from "./mmfObject";
 
 export default {
   inline,
@@ -25,6 +26,7 @@ export default {
   embedded,
   emoji,
   youtube,
+  mmfObject,
   image,
   remove,
   history
