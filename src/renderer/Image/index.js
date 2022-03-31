@@ -144,12 +144,12 @@ const getImageComponent = (config) =>
       });
     };
 
-  toggleHovered: Function = (isHovered): void => {
-    const hovered = isHovered;
-    this.setState({
-      hovered,
-    });
-  };
+    toggleHovered: Function = (isHovered): void => {
+      const hovered = isHovered;
+      this.setState({
+        hovered,
+      });
+    };
 
     renderAlignmentOptions(alignment): Object {
       const icons = defaultToolbar.imageAlign;
@@ -256,11 +256,10 @@ const getImageComponent = (config) =>
       );
     }
 
+    drag(event): any {
+      event.dataTransfer.setData("key", this.props.block.key);
+    }
 
-  drag(event):any{
-    event.dataTransfer.setData("key", this.props.block.key);
-  }
-  
     renderDeletionOption(alignment): Object {
       return (
         <div
@@ -279,7 +278,6 @@ const getImageComponent = (config) =>
       );
     }
 
-
     render(): Object {
       const { block, contentState } = this.props;
       const { hovered } = this.state;
@@ -287,16 +285,22 @@ const getImageComponent = (config) =>
       const entity = contentState.getEntity(block.getEntityAt(0));
       const { src, alignment, height, width, alt } = entity.getData();
 
+      let imageClass = "rdw-image-center";
+
+      if (alignment === "left") {
+        imageClass = "rdw-image-left";
+      }
+
+      if (alignment === "right") {
+        imageClass = "rdw-image-right";
+      }
+
       return (
         <>
           <span
-            onMouseOver={()=>this.toggleHovered(true)}
-            onMouseLeave={()=>this.toggleHovered(false)}
-            className={classNames("rdw-image-alignment", {
-              'rdw-image-left': alignment === 'left',
-              'rdw-image-right': alignment === 'right',
-              'rdw-image-center': !alignment || alignment === 'none'
-            })}
+            onMouseOver={() => this.toggleHovered(true)}
+            onMouseLeave={() => this.toggleHovered(false)}
+            className={`rdw-image-alignment ${imageClass}`}
           >
             <span className="rdw-image-imagewrapper">
               <div
@@ -329,7 +333,7 @@ const getImageComponent = (config) =>
                     maxWidth: "100%",
                   }}
                   draggable="true"
-                  onDragStart={(event)=>this.drag(event)}                  
+                  onDragStart={(event) => this.drag(event)}
                 />
               </div>
 
