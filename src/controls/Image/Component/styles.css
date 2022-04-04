@@ -113,6 +113,7 @@
   cursor: pointer;
   background: white;
   text-transform: capitalize;
+  padding: 0 !important;
 }
 .rdw-image-modal-btn:hover {
   box-shadow: 1px 1px 0px #BFBDBD;
