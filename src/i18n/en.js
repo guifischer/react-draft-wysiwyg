@@ -31,8 +31,8 @@ export default {
   "components.controls.youtube.enterlink": "Enter link",
 
   // mmf object
-  "components.controls.mmfObject.mmfObject": "MMF Object",
-  "components.controls.mmfObject.mmfObject": "MMF Object",
+  "components.controls.mmfObject.mmfObject": "Embed Object",
+  "components.controls.mmfObject.mmfObject": "Embed Object",
   "components.controls.mmfObject.enterlink": "Enter link",
 
   // Emoji
@@ -86,5 +86,5 @@ export default {
   "components.controls.textalign.left": "Left",
   "components.controls.textalign.center": "Center",
   "components.controls.textalign.right": "Right",
-  "components.controls.textalign.justify": "Justify"
+  "components.controls.textalign.justify": "Justify",
 };
