@@ -1159,16 +1159,14 @@ div > .public-DraftStyleDefault-block {
   box-sizing: content-box;
 }
 .rdw-editor-main blockquote {
-  margin: auto!important;
+    margin: auto!important;
     line-height: inherit!important;
     color: inherit!important;
-    border-left: 10px solid #ddd!important;
+    border-left: 8px solid rgba(47, 196, 158, 1)!important;
     padding: 20px!important;
-    background: #f9f9f9;
-    width: 80%;
-    max-width: 460px;
+    background: #eeeeee;
+    margin: 0 0 16px 34px !important;
     display: block;
-    margin: auto;
 }
 .rdw-editor-main pre {
   background: #f1f1f1;
