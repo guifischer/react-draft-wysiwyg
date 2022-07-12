@@ -18,6 +18,7 @@ class LayoutComponent extends Component {
 
   state = {
     imgSrc: '',
+    resizedImgSrc: '',
     dragEnter: false,
     uploadHighlighted:
       this.props.config.uploadEnabled && !!this.props.config.uploadCallback,
@@ -32,6 +33,7 @@ class LayoutComponent extends Component {
     if (prevProps.expanded && !this.props.expanded) {
       this.setState({
         imgSrc: '',
+        resizedImgSrc:'',
         dragEnter: false,
         uploadHighlighted: config.uploadEnabled && !!config.uploadCallback,
         showImageLoading: false,
@@ -92,7 +94,7 @@ class LayoutComponent extends Component {
   };
 
   addImageFromState = () => {
-    const { imgSrc, alt } = this.state;
+    const { imgSrc, alt, resizedImgSrc } = this.state;
     let { height, width } = this.state;
     const { onChange } = this.props;
     if (!isNaN(height)) {
@@ -101,7 +103,7 @@ class LayoutComponent extends Component {
     if (!isNaN(width)) {
       width += 'px';
     }
-    onChange(imgSrc, height, width, alt);
+    onChange(imgSrc, resizedImgSrc, height, width, alt);
   };
 
   showImageURLOption = () => {
@@ -138,6 +140,7 @@ class LayoutComponent extends Component {
           showImageLoading: false,
           dragEnter: false,
           imgSrc: data.link || data.url,
+          resizedImgSrc: data.resized
         });
         this.fileUpload = false;
       })
@@ -166,6 +169,7 @@ class LayoutComponent extends Component {
   renderAddImageModal() {
     const {
       imgSrc,
+      resizedImgSrc,
       uploadHighlighted,
       showImageLoading,
       dragEnter,
@@ -235,7 +239,7 @@ class LayoutComponent extends Component {
               >
                 {previewImage && imgSrc ? (
                   <img
-                    src={imgSrc}
+                    src={resizedImgSrc}
                     alt={imgSrc}
                     className="rdw-image-modal-upload-option-image-preview"
                   />
