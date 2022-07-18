@@ -36,6 +36,7 @@ const getImageComponent = (config) =>
       height: "0px",
       width: "0px",
       currentImageAlignment: undefined,
+      showImgPopup:false
     };
 
     setBlockLock = (editorState, value) => {
@@ -332,6 +333,7 @@ const getImageComponent = (config) =>
                     objectFit: "cover",
                     maxWidth: "100%",
                   }}
+                  onClick={()=>this.setState({showImgPopup:true})}
                   draggable="true"
                   onDragStart={(event) => this.drag(event)}
                 />
@@ -345,6 +347,18 @@ const getImageComponent = (config) =>
               </div>
             </span>
           </span>
+          {this.state.showImgPopup && (
+            <div id="popup1" className="overlay">
+              <div className="popup">
+              <a className="close" onClick={()=>this.setState({showImgPopup:false})}>&times;</a>
+              <img
+                  src={src}
+                  alt={alt}
+                />
+              </div>
+            </div>
+           )}
+          
         </>
       );
     }
