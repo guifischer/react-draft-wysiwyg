@@ -36,6 +36,7 @@ const getImageComponent = (config) =>
       height: "0px",
       width: "0px",
       currentImageAlignment: undefined,
+      showImgPopup:false
     };
 
     setBlockLock = (editorState, value) => {
@@ -283,7 +284,7 @@ const getImageComponent = (config) =>
       const { hovered } = this.state;
       const { isReadOnly, isImageAlignmentEnabled, isImageSizeEnabled, isImageDeletionEnabled } = config;
       const entity = contentState.getEntity(block.getEntityAt(0));
-      const { src, alignment, height, width, alt } = entity.getData();
+      const { src,resizedSrc, alignment, height, width, alt } = entity.getData();
 
       let imageClass = "rdw-image-center";
 
@@ -324,7 +325,7 @@ const getImageComponent = (config) =>
                 </div>
                 <img
                   id="image"
-                  src={src}
+                  src={resizedSrc || src}
                   alt={alt}
                   style={{
                     height,
@@ -332,6 +333,7 @@ const getImageComponent = (config) =>
                     objectFit: "cover",
                     maxWidth: "100%",
                   }}
+                  onClick={()=>this.setState({showImgPopup:true})}
                   draggable="true"
                   onDragStart={(event) => this.drag(event)}
                 />
@@ -345,6 +347,18 @@ const getImageComponent = (config) =>
               </div>
             </span>
           </span>
+          {this.state.showImgPopup && (
+            <div id="popup1" className="overlay">
+              <div className="popup">
+              <a className="close" onClick={()=>this.setState({showImgPopup:false})}>&times;</a>
+              <img
+                  src={src}
+                  alt={alt}
+                />
+              </div>
+            </div>
+           )}
+          
         </>
       );
     }
