@@ -50,9 +50,9 @@ class ImageControl extends Component {
     this.signalExpanded = false;
   };
 
-  addImage = (src, height, width, alt) => {
+  addImage = (src, resizedSrc, height, width, alt) => {
     const { editorState, onChange, config } = this.props;
-    const entityData = { src, height, width };
+    const entityData = { src,resizedSrc, height, width };
     if (config.alt.present) {
       entityData.alt = alt;
     }
