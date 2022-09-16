@@ -410,7 +410,7 @@ const getImageComponent = (config) =>
                     objectFit: "cover",
                     maxWidth: "100%",
                   }}
-                  onClick={() => config.onImageClick(src)}
+                  // onClick={() => config.onImageClick(src)}
                   draggable="true"
                   onDragStart={(event) => this.drag(event)}
                 />
