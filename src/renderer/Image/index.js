@@ -36,12 +36,15 @@ const getImageComponent = (config) =>
       height: "0px",
       width: "0px",
       currentImageAlignment: undefined,
+      showImgPopup: false,
     };
 
     setBlockLock = (editorState, value) => {
       const { block } = this.props;
 
-      const oldData = convertToRaw(editorState.getCurrentContent()).blocks.find((b) => b.key == block.getKey()).data;
+      const oldData = convertToRaw(editorState.getCurrentContent()).blocks.find(
+        (b) => b.key == block.getKey()
+      ).data;
 
       // save the actual selection to use later
       const userSelection = editorState.getSelection();
@@ -49,9 +52,17 @@ const getImageComponent = (config) =>
       // create a new selection with the block I want to change
       const selection = SelectionState.createEmpty(block.getKey());
 
-      const newContent = Modifier.setBlockData(editorState.getCurrentContent(), selection, { ...oldData, ...value });
+      const newContent = Modifier.setBlockData(
+        editorState.getCurrentContent(),
+        selection,
+        { ...oldData, ...value }
+      );
 
-      const newEditor = EditorState.push(editorState, newContent, "change-block-data");
+      const newEditor = EditorState.push(
+        editorState,
+        newContent,
+        "change-block-data"
+      );
 
       // return a new editor state, applying the selection we stored before
       return EditorState.forceSelection(newEditor, userSelection);
@@ -60,15 +71,24 @@ const getImageComponent = (config) =>
     addBlockAlignmentData = (value) => {
       const { currentImageAlignment } = this.state;
       if (currentImageAlignment !== value) {
-        config.onChange(this.setBlockLock(config.getEditorState(), { "image-align": value }));
+        config.onChange(
+          this.setBlockLock(config.getEditorState(), { "image-align": value })
+        );
       } else {
-        config.onChange(setBlockData(config.getEditorState(), { "text-align": undefined }));
+        config.onChange(
+          setBlockData(config.getEditorState(), { "text-align": undefined })
+        );
       }
     };
 
     addBlockSizeData = () => {
       const { height, width } = this.state;
-      config.onChange(this.setBlockLock(config.getEditorState(), { height: height, width: width }));
+      config.onChange(
+        this.setBlockLock(config.getEditorState(), {
+          height: height,
+          width: width,
+        })
+      );
     };
 
     removeImage: Function = (): void => {
@@ -82,10 +102,24 @@ const getImageComponent = (config) =>
         focusKey: afterKey,
         focusOffset: 0,
       });
-      let newContentState = Modifier.setBlockType(contentState, targetRange, "unstyled");
+      let newContentState = Modifier.setBlockType(
+        contentState,
+        targetRange,
+        "unstyled"
+      );
 
-      newContentState = Modifier.removeRange(newContentState, targetRange, "backward");
-      config.onChange(EditorState.push(config.getEditorState(), newContentState, "remove-range"));
+      newContentState = Modifier.removeRange(
+        newContentState,
+        targetRange,
+        "backward"
+      );
+      config.onChange(
+        EditorState.push(
+          config.getEditorState(),
+          newContentState,
+          "remove-range"
+        )
+      );
     };
 
     setEntityAlignmentLeft: Function = (): void => {
@@ -128,7 +162,13 @@ const getImageComponent = (config) =>
         height: entityHeight,
         width: entityWidth,
       });
-      config.onChange(EditorState.push(config.getEditorState(), contentState, "change-block-data"));
+      config.onChange(
+        EditorState.push(
+          config.getEditorState(),
+          contentState,
+          "change-block-data"
+        )
+      );
       this.setState({
         dummy: true,
       });
@@ -138,7 +178,13 @@ const getImageComponent = (config) =>
       const { block, contentState } = this.props;
       const entityKey = block.getEntityAt(0);
       contentState.mergeEntityData(entityKey, { alignment });
-      config.onChange(EditorState.push(config.getEditorState(), contentState, "change-block-data"));
+      config.onChange(
+        EditorState.push(
+          config.getEditorState(),
+          contentState,
+          "change-block-data"
+        )
+      );
       this.setState({
         dummy: true,
       });
@@ -160,13 +206,22 @@ const getImageComponent = (config) =>
             "rdw-image-alignment-options-popup-right": alignment === "right",
           })}
         >
-          <Option onClick={this.setEntityAlignmentLeft} className="rdw-image-alignment-option">
+          <Option
+            onClick={this.setEntityAlignmentLeft}
+            className="rdw-image-alignment-option"
+          >
             <img className="" src={icons.left} alt="" />
           </Option>
-          <Option onClick={this.setEntityAlignmentCenter} className="rdw-image-alignment-option">
+          <Option
+            onClick={this.setEntityAlignmentCenter}
+            className="rdw-image-alignment-option"
+          >
             <img src={icons.center} alt="" />
           </Option>
-          <Option onClick={this.setEntityAlignmentRight} className="rdw-image-alignment-option">
+          <Option
+            onClick={this.setEntityAlignmentRight}
+            className="rdw-image-alignment-option"
+          >
             <img src={icons.right} alt="" />
           </Option>
         </div>
@@ -216,14 +271,21 @@ const getImageComponent = (config) =>
               e.preventDefault();
             }}
             onChange={(e) => {
-              e.preventDefault(), this.setState({ height: e.target.value.concat("px") });
+              e.preventDefault(),
+                this.setState({ height: e.target.value.concat("px") });
             }}
           />
           <div>
-            <Option onClick={() => this.handleChangeHeight(true)} className="rdw-image-size-option-update">
+            <Option
+              onClick={() => this.handleChangeHeight(true)}
+              className="rdw-image-size-option-update"
+            >
               <img className="size-arrow" src={icons.upArrow} />
             </Option>
-            <Option onClick={() => this.handleChangeHeight(false)} className="rdw-image-size-option-update">
+            <Option
+              onClick={() => this.handleChangeHeight(false)}
+              className="rdw-image-size-option-update"
+            >
               <img className="size-arrow" src={icons.downArrow} />
             </Option>
           </div>
@@ -235,21 +297,31 @@ const getImageComponent = (config) =>
               e.preventDefault();
             }}
             onChange={(e) => {
-              e.preventDefault(), this.setState({ width: e.target.value.concat("px") });
+              e.preventDefault(),
+                this.setState({ width: e.target.value.concat("px") });
             }}
           />
           <div>
-            <Option onClick={() => this.handleChangeWidth(true)} className="rdw-image-size-option-update">
+            <Option
+              onClick={() => this.handleChangeWidth(true)}
+              className="rdw-image-size-option-update"
+            >
               <img className="size-arrow" src={icons.upArrow} />
             </Option>
-            <Option onClick={() => this.handleChangeWidth(false)} className="rdw-image-size-option-update">
+            <Option
+              onClick={() => this.handleChangeWidth(false)}
+              className="rdw-image-size-option-update"
+            >
               <img className="size-arrow" src={icons.downArrow} />
             </Option>
           </div>
           <Option onClick={this.applySize} className="rdw-image-size-option">
             Apply
           </Option>
-          <Option onClick={this.setEntitySizeAuto} className="rdw-image-size-option">
+          <Option
+            onClick={this.setEntitySizeAuto}
+            className="rdw-image-size-option"
+          >
             Auto
           </Option>
         </div>
@@ -281,9 +353,15 @@ const getImageComponent = (config) =>
     render(): Object {
       const { block, contentState } = this.props;
       const { hovered } = this.state;
-      const { isReadOnly, isImageAlignmentEnabled, isImageSizeEnabled, isImageDeletionEnabled } = config;
+      const {
+        isReadOnly,
+        isImageAlignmentEnabled,
+        isImageSizeEnabled,
+        isImageDeletionEnabled,
+      } = config;
       const entity = contentState.getEntity(block.getEntityAt(0));
-      const { src, alignment, height, width, alt } = entity.getData();
+      const { src, resizedSrc, alignment, height, width, alt } =
+        entity.getData();
 
       let imageClass = "rdw-image-center";
 
@@ -324,7 +402,7 @@ const getImageComponent = (config) =>
                 </div>
                 <img
                   id="image"
-                  src={src}
+                  src={resizedSrc || src}
                   alt={alt}
                   style={{
                     height,
@@ -332,6 +410,7 @@ const getImageComponent = (config) =>
                     objectFit: "cover",
                     maxWidth: "100%",
                   }}
+                  // onClick={() => config.onImageClick(src)}
                   draggable="true"
                   onDragStart={(event) => this.drag(event)}
                 />
@@ -341,7 +420,9 @@ const getImageComponent = (config) =>
                 {!isReadOnly() && hovered && isImageAlignmentEnabled()
                   ? this.renderAlignmentOptions(alignment)
                   : undefined}
-                {!isReadOnly() && hovered && isImageSizeEnabled() ? this.renderSizeOptions(alignment) : undefined}
+                {!isReadOnly() && hovered && isImageSizeEnabled()
+                  ? this.renderSizeOptions(alignment)
+                  : undefined}
               </div>
             </span>
           </span>

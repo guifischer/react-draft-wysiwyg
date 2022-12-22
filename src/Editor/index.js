@@ -40,7 +40,9 @@ class WysiwygEditor extends Component {
   constructor(props) {
     super(props);
     const toolbar = mergeRecursive(defaultToolbar, props.toolbar);
-    const wrapperId = props.wrapperId ? props.wrapperId : Math.floor(Math.random() * 10000);
+    const wrapperId = props.wrapperId
+      ? props.wrapperId
+      : Math.floor(Math.random() * 10000);
     this.wrapperId = `rdw-wrapper-${wrapperId}`;
     this.modalHandler = new ModalHandler();
     this.focusHandler = new FocusHandler();
@@ -52,6 +54,7 @@ class WysiwygEditor extends Component {
         isImageDeletionEnabled: this.isImageDeletionEnabled,
         getEditorState: this.getEditorState,
         onChange: this.onChange,
+        onImageClick: this.onImageClick,
       },
       props.customBlockRenderFunc
     );
@@ -64,6 +67,8 @@ class WysiwygEditor extends Component {
       editorState,
       editorFocused: false,
       toolbar,
+      showImgPopup: false,
+      imgSrc: null,
     };
   }
 
@@ -80,7 +85,10 @@ class WysiwygEditor extends Component {
       const toolbar = mergeRecursive(defaultToolbar, toolbar);
       newState.toolbar = toolbar;
     }
-    if (hasProperty(this.props, "editorState") && editorState !== prevProps.editorState) {
+    if (
+      hasProperty(this.props, "editorState") &&
+      editorState !== prevProps.editorState
+    ) {
       if (editorState) {
         newState.editorState = EditorState.set(editorState, {
           decorator: this.compositeDecorator,
@@ -88,7 +96,10 @@ class WysiwygEditor extends Component {
       } else {
         newState.editorState = EditorState.createEmpty(this.compositeDecorator);
       }
-    } else if (hasProperty(this.props, "contentState") && contentState !== prevProps.contentState) {
+    } else if (
+      hasProperty(this.props, "contentState") &&
+      contentState !== prevProps.contentState
+    ) {
       if (contentState) {
         const newEditorState = this.changeEditorState(contentState);
         if (newEditorState) {
@@ -98,18 +109,27 @@ class WysiwygEditor extends Component {
         newState.editorState = EditorState.createEmpty(this.compositeDecorator);
       }
     }
-    if (prevProps.editorState !== editorState || prevProps.contentState !== contentState) {
+    if (
+      prevProps.editorState !== editorState ||
+      prevProps.contentState !== contentState
+    ) {
       extractInlineStyle(newState.editorState);
     }
     if (Object.keys(newState).length) this.setState(newState);
     this.editorProps = this.filterEditorProps(this.props);
     this.customStyleMap = this.getStyleMap(this.props);
-
   }
 
   onEditorBlur = () => {
     this.setState({
       editorFocused: false,
+    });
+  };
+
+  onImageClick = (src) => {
+    this.setState({
+      imgSrc: src,
+      showImgPopup: true,
     });
   };
 
@@ -132,7 +152,11 @@ class WysiwygEditor extends Component {
     if (event.key === "Tab") {
       const { onTab } = this.props;
       if (!onTab || !onTab(event)) {
-        const editorState = changeDepth(this.state.editorState, event.shiftKey ? -1 : 1, 4);
+        const editorState = changeDepth(
+          this.state.editorState,
+          event.shiftKey ? -1 : 1,
+          4
+        );
         if (editorState && editorState !== this.state.editorState) {
           this.onChange(editorState);
           event.preventDefault();
@@ -164,7 +188,13 @@ class WysiwygEditor extends Component {
 
   onChange = (editorState) => {
     const { readOnly, onEditorStateChange } = this.props;
-    if (!readOnly && !(getSelectedBlocksType(editorState) === "atomic" && editorState.getSelection().isCollapsed)) {
+    if (
+      !readOnly &&
+      !(
+        getSelectedBlocksType(editorState) === "atomic" &&
+        editorState.getSelection().isCollapsed
+      )
+    ) {
       if (onEditorStateChange) {
         onEditorStateChange(editorState, this.props.wrapperId);
       }
@@ -219,7 +249,6 @@ class WysiwygEditor extends Component {
   getSuggestions = () => this.props.mention && this.props.mention.suggestions;
 
   afterChange = (editorState) => {
-
     setTimeout(() => {
       const { onChange, onContentStateChange } = this.props;
       if (onChange) {
@@ -256,14 +285,24 @@ class WysiwygEditor extends Component {
     } else if (hasProperty(this.props, "contentState")) {
       if (this.props.contentState) {
         const contentState = convertFromRaw(this.props.contentState);
-        editorState = EditorState.createWithContent(contentState, compositeDecorator);
+        editorState = EditorState.createWithContent(
+          contentState,
+          compositeDecorator
+        );
         editorState = EditorState.moveSelectionToEnd(editorState);
       }
-    } else if (hasProperty(this.props, "defaultContentState") || hasProperty(this.props, "initialContentState")) {
-      let contentState = this.props.defaultContentState || this.props.initialContentState;
+    } else if (
+      hasProperty(this.props, "defaultContentState") ||
+      hasProperty(this.props, "initialContentState")
+    ) {
+      let contentState =
+        this.props.defaultContentState || this.props.initialContentState;
       if (contentState) {
         contentState = convertFromRaw(contentState);
-        editorState = EditorState.createWithContent(contentState, compositeDecorator);
+        editorState = EditorState.createWithContent(
+          contentState,
+          compositeDecorator
+        );
         editorState = EditorState.moveSelectionToEnd(editorState);
       }
     }
@@ -308,12 +347,19 @@ class WysiwygEditor extends Component {
       "customStyleMap",
     ]);
 
-  getStyleMap = (props) => ({ ...getCustomStyleMap(), ...props.customStyleMap });
+  getStyleMap = (props) => ({
+    ...getCustomStyleMap(),
+    ...props.customStyleMap,
+  });
 
   changeEditorState = (contentState) => {
     const newContentState = convertFromRaw(contentState);
     let { editorState } = this.state;
-    editorState = EditorState.push(editorState, newContentState, "insert-characters");
+    editorState = EditorState.push(
+      editorState,
+      newContentState,
+      "insert-characters"
+    );
     editorState = EditorState.moveSelectionToEnd(editorState);
     return editorState;
   };
@@ -339,7 +385,8 @@ class WysiwygEditor extends Component {
 
   handlePastedTextFn = (text, html) => {
     const { editorState } = this.state;
-    const { handlePastedText: handlePastedTextProp, stripPastedStyles } = this.props;
+    const { handlePastedText: handlePastedTextProp, stripPastedStyles } =
+      this.props;
 
     if (handlePastedTextProp) {
       return handlePastedTextProp(text, html, editorState, this.onChange);
@@ -351,38 +398,52 @@ class WysiwygEditor extends Component {
   };
 
   preventDefault = (event) => {
-    if (event.target.tagName === "INPUT" || event.target.tagName === "LABEL" || event.target.tagName === "TEXTAREA") {
+    if (
+      event.target.tagName === "INPUT" ||
+      event.target.tagName === "LABEL" ||
+      event.target.tagName === "TEXTAREA"
+    ) {
       this.focusHandler.onInputMouseDown();
     } else {
       event.preventDefault();
     }
   };
 
-  positioningImg=(blocks,targetKey,imageKey)=>{
+  positioningImg = (blocks, targetKey, imageKey) => {
+    const imgBlockIndex = blocks.findIndex((b) => b.key == imageKey);
+    const targetBlockIndex = blocks.findIndex((b) => b.key == targetKey);
 
-    const imgBlockIndex = blocks.findIndex(b=>b.key == imageKey)
-    const targetBlockIndex = blocks.findIndex(b=>b.key == targetKey)
+    const firstPart = blocks
+      .slice(0, targetBlockIndex)
+      .filter((b) => b.key != blocks[imgBlockIndex].key);
+    const secondPart = blocks
+      .slice(targetBlockIndex)
+      .filter((b) => b.key != blocks[imgBlockIndex].key);
+    const imgBlocks = [blocks[imgBlockIndex]];
 
-    const firstPart = blocks.slice(0, targetBlockIndex).filter(b=> b.key!=blocks[imgBlockIndex].key)
-    const secondPart = blocks.slice(targetBlockIndex).filter(b=> b.key!=blocks[imgBlockIndex].key)
-    const imgBlocks= [blocks[imgBlockIndex]]
+    return [...firstPart, ...imgBlocks, ...secondPart];
+  };
 
-    return [...firstPart,...imgBlocks,...secondPart]
+  drop = (event) => {
+    const imgKey = event.dataTransfer.getData("key");
+    const offsetKey = event.target.dataset.offsetKey;
+    const key = offsetKey.substring(0, offsetKey.indexOf("-"));
 
-  }
+    const raw = convertToRaw(this.state.editorState.getCurrentContent());
 
-  drop=(event)=>{
+    const newContent = {
+      ...raw,
+      blocks: this.positioningImg(raw.blocks, key, imgKey),
+    };
 
-    const imgKey = event.dataTransfer.getData("key")
-    const offsetKey = event.target.dataset.offsetKey
-    const key = offsetKey.substring(0,offsetKey.indexOf('-'));
-
-    const raw = convertToRaw(this.state.editorState.getCurrentContent())
-
-    const newContent = {...raw,blocks:this.positioningImg(raw.blocks,key,imgKey)}
-
-    this.onChange(EditorState.push(this.state.editorState, convertFromRaw(newContent), 'reorder'));
-  }
+    this.onChange(
+      EditorState.push(
+        this.state.editorState,
+        convertFromRaw(newContent),
+        "reorder"
+      )
+    );
+  };
 
   render() {
     const { editorState, editorFocused, toolbar } = this.state;
@@ -411,7 +472,8 @@ class WysiwygEditor extends Component {
         ...translations,
       },
     };
-    const toolbarShow = editorFocused || this.focusHandler.isInputFocused() || !toolbarOnFocus;
+    const toolbarShow =
+      editorFocused || this.focusHandler.isInputFocused() || !toolbarOnFocus;
     return (
       <div
         id={this.wrapperId}
@@ -421,6 +483,19 @@ class WysiwygEditor extends Component {
         onBlur={this.onWrapperBlur}
         aria-label="rdw-wrapper"
       >
+        {this.state.showImgPopup && (
+          <div id="popup1" className="overlay">
+            <div className="popup">
+              <a
+                className="close"
+                onClick={() => this.setState({ showImgPopup: false })}
+              >
+                &times;
+              </a>
+              <img src={this.state.imgSrc} />
+            </div>
+          </div>
+        )}
         {!toolbarHidden && (
           <div
             className={classNames("rdw-editor-toolbar", toolbarClassName)}
@@ -443,7 +518,9 @@ class WysiwygEditor extends Component {
               return <Control key={index} {...controlProps} config={config} />;
             })}
             {toolbarCustomButtons &&
-              toolbarCustomButtons.map((button, index) => React.cloneElement(button, { key: index, ...controlProps }))}
+              toolbarCustomButtons.map((button, index) =>
+                React.cloneElement(button, { key: index, ...controlProps })
+              )}
           </div>
         )}
         <div
@@ -454,10 +531,16 @@ class WysiwygEditor extends Component {
           onFocus={this.onEditorFocus}
           onBlur={this.onEditorBlur}
           onKeyDown={KeyDownHandler.onKeyDown}
-          onKeyUp={(event)=>event.key === 'Enter' || event.keyCode === 13?document.getElementsByClassName("rdw-editor-main")[0].scrollBy(0, 35):false}
+          onKeyUp={(event) =>
+            event.key === "Enter" || event.keyCode === 13
+              ? document
+                  .getElementsByClassName("rdw-editor-main")[0]
+                  .scrollBy(0, 35)
+              : false
+          }
           onMouseDown={this.onEditorMouseDown}
-          onDrop={(event)=>this.drop(event)}
-        > 
+          onDrop={(event) => this.drop(event)}
+        >
           <Editor
             ref={this.setEditorReference}
             keyBindingFn={this.keyBindingFn}

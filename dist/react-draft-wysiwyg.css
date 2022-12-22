@@ -1127,6 +1127,52 @@
 .size-arrow{
   width: 13px;
 }
+
+/* image popup */
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  z-index: 9999;
+}
+
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: auto;
+}
+
+.popup .close {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+
+.popup img {
+    max-width: 95vW;
+    background-size: contain;
+    object-fit: contain;
+    pointer-events: all;
+    max-height: 100%;
+}
+
+
 .rdw-editor-main {
   height: 100%;
   overflow: auto;
